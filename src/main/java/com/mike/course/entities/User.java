@@ -9,12 +9,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Entity //na hora de importar, colocar o javax.persistence , pois é sempre bom depender da especificação (jpa) e não da implementação (hibernate)
-public class User implements Serializable{
-	
+@Entity // na hora de importar, colocar o javax.persistence , pois é sempre bom depender
+		// da especificação (jpa) e não da implementação (hibernate)
+@Table(name = "tb_user")
+public class User implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -22,11 +26,12 @@ public class User implements Serializable{
 	private String email;
 	private String phone;
 	private String password;
-	
-	private List<Order> orders = new ArrayList<>(); 
-	
+
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
+
 	public User() {
-		
+
 	}
 
 	public User(Long id, String name, String email, String phone, String password) {
@@ -36,6 +41,10 @@ public class User implements Serializable{
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
+	}
+	
+	public List<Order> getOrders() {
+		return orders;
 	}
 
 	public Long getId() {
@@ -94,7 +103,5 @@ public class User implements Serializable{
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 
 }
