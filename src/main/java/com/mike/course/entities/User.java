@@ -1,6 +1,8 @@
 package com.mike.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -20,6 +22,8 @@ public class User implements Serializable{
 	private String email;
 	private String phone;
 	private String password;
+	
+	private List<Order> orders = new ArrayList<>(); 
 	
 	public User() {
 		
