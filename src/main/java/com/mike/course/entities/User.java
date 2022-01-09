@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity // na hora de importar, colocar o javax.persistence , pois é sempre bom depender
 		// da especificação (jpa) e não da implementação (hibernate)
 @Table(name = "tb_user")
@@ -27,6 +29,7 @@ public class User implements Serializable {
 	private String phone;
 	private String password;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 
