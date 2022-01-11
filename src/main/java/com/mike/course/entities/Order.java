@@ -27,7 +27,7 @@ public class Order implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT") //formatação do json
 	private Instant moment;
 	
-	private OrderStatus orderStatus;
+	private Integer orderStatus;
 	
 	@ManyToOne //muitos para um
 	@JoinColumn(name = "client_id")//nome da chave estrangeira no db
@@ -41,7 +41,7 @@ public class Order implements Serializable {
 		super();
 		this.id = id;
 		this.moment = moment;
-		this.orderStatus = orderStatus;
+		setOrderStatus(orderStatus);
 		this.client = client;
 	}
 
@@ -62,11 +62,13 @@ public class Order implements Serializable {
 	}
 	
 	public OrderStatus getOrderStatus() {
-		return orderStatus;
+		return OrderStatus.valueOf(orderStatus); //temos um valor Inteiro e precisamos retornar um tipo OrderStatus, por isso, usamos o valueOf
 	}
 
 	public void setOrderStatus(OrderStatus orderStatus) {
-		this.orderStatus = orderStatus;
+		if(orderStatus != null) {
+		this.orderStatus = orderStatus.getCode(); //aqui nós temos um orderStatus e queremos setar um valor Inteiro, para isso, usamos o getCode
+		}
 	}
 
 	public User getClient() {
