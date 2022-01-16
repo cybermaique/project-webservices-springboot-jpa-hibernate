@@ -8,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 //Um produto pode ter uma categoria - Uma categoria pode ter vários produtos.
 
@@ -27,7 +29,11 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 	
-	@Transient //Impede que o JPA tente interpretar o código
+	@ManyToMany
+	@JoinTable(name = "tb_product_category", 
+	joinColumns = @JoinColumn(name = "product_id"), //joinColumn é pra definir a chave estrangeira da entidade.
+	inverseJoinColumns = @JoinColumn(name = "category_id") //o inverseJoinColumns é para definir a chave estrangeira da outra entidade (tabela)
+	)
 	private Set<Category> categories = new HashSet<>(); //set é uma coleção que representa conjunto, assim garantimos que não vai ter um produto com 2 categorias iguais. O hashset é pra instanciar, garantir que a coleção não comece valendo nula, dessa forma ela vai começar vazia e instanciada. 
 	
 	public Product() {

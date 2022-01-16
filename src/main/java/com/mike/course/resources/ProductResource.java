@@ -1,5 +1,8 @@
 package com.mike.course.resources;
 
+//No Banco de Dados relacional, para associar os produtos com as categorias, usamos a tabela de associação. Aprendemos isso no banco de dados quando vamos transformar um modelo de análise para uma modelo relacional.
+//Dessa forma, temos que mapear as nossas classes Produto e Categoria, para que a tabela de associação apareça no Banco de Dados relacional.
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

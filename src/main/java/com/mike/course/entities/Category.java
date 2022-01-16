@@ -8,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //Um produto pode ter uma categoria - Uma categoria pode ter vários produtos.
 
@@ -24,7 +26,8 @@ public class Category implements Serializable {
 	private Long id;
 	private String name;
 	
-	@Transient //Impede que o JPA tente interpretar o código
+	@JsonIgnore //RESOLVE O PROBLEMA DO LOOP INFINITO CRIADO AO CONSULTAR O CATEGORIES NO POSTMAN (CATEGORIA CHAMA PRODUTO > CATEGORIA > PRODUTO...)
+	@ManyToMany(mappedBy = "categories") //no mappedby ta o nome da coleção da outra classe (product)
 	private Set<Product> products = new HashSet<>();
 	
 	public Category() {
